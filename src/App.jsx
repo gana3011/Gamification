@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import TextArray from "./Components/TextArray"
 import CodeEditor from "./Components/CodeEditor";
 import { Box} from "@chakra-ui/react";
+import Map from "./Components/Map";
+
 
 function App() {
 
@@ -12,11 +14,14 @@ function App() {
   }
   
   return(
-  <Box>
-   {!isCodeEditor ? (<TextArray onEnd={onEnd} />) : (<CodeEditor />)
-   }
-  </Box>
+  // <Box>
+  //  {!isCodeEditor ? (<TextArray onEnd={onEnd} />) : (<CodeEditor />)
+  //  }
+  // </Box>
+  <Map />
   );
+
+
 }
 
 export default App;
