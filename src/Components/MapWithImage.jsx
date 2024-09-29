@@ -60,6 +60,27 @@ const MapWithImage = () => {
     c:c,
   })
 
+  const spriteWidth = player.image.width / player.framesWidth 
+  const spriteHeight = player.image.height / player.framesHeight 
+
+  const hitbox = {
+    position:{
+      x: player.position.x + (spriteWidth * player.scale *0.4),
+      y: player.position.y + (spriteHeight * player.scale * 0.26),
+    },
+    width:spriteWidth * player.scale * 0.22,
+    height:spriteHeight * player.scale * 0.48,
+  }
+
+  const collision = (rect1,rect2) =>{
+    return(
+      rect1.position.x + rect1.width >= rect2.position.x &&
+      rect1.position.x <= rect2.position.x + rect2.width &&
+      rect1.position.y + rect1.height >= rect2.position.y &&
+      rect1.position.y <= rect2.position.y + rect2.height 
+    )
+  }
+
  
   function animate(){
     
@@ -69,27 +90,24 @@ const MapWithImage = () => {
     test.draw();
     
     player.draw();
-    const spriteWidth = player.image.width / player.framesWidth 
-    const spriteHeight = player.image.height / player.framesHeight 
-
+    
  
+  // c.fillStyle = 'rgba(255, 0, 0, 0.3)';
+  // c.fillRect(
+  //   player.position.x + (spriteWidth * player.scale * 0.4), 
+  //   player.position.y + (spriteHeight * player.scale * 0.25), 
+  //   spriteWidth * player.scale * 0.22, 
+  //   spriteHeight * player.scale * 0.5 
+  // );
+
   c.fillStyle = 'rgba(255, 0, 0, 0.3)';
-  c.fillRect(
-    player.position.x + (spriteWidth * player.scale * 0.4), 
-    player.position.y + (spriteHeight * player.scale * 0.25), 
-    spriteWidth * player.scale * 0.22, 
-    spriteHeight * player.scale * 0.5 
-  );
+  c.fillRect(hitbox.position.x , hitbox.position.y, hitbox.width, hitbox.height);
    
 
-  if (
-      player.position.x + (spriteWidth * player.scale*0.38) >= test.position.x &&
-      player.position.x + (spriteWidth * player.scale * 0.4) <= test.position.x + test.width &&
-      player.position.y <= test.position.y + test.height &&
-      player.position.y + (spriteHeight * player.scale) >= test.position.y
-    ) {
-      console.log("Collision");
-    }
+  if(collision(hitbox,test))
+  {
+    console.log("collision")
+  }
 
     if(keys.current.w.pressed) {background.position.y += 3; test.position.y +=3}
     if(keys.current.s.pressed) {background.position.y -= 3; test.position.y -=3}
