@@ -34,8 +34,31 @@ const MapWithImage = () => {
     const image = new Image();
     image.src = "src/assets/fantasy final.png";
 
-    const playerImg = new Image();
-    playerImg.src = "src/assets/_up idle.png";
+    const playerUpIdle = new Image();
+    playerUpIdle.src = "src/assets/_up idle.png";
+
+    const playerDownIdle = new Image();
+    playerDownIdle.src = "src/assets/_down idle.png";
+
+    const playerLeftIdle = new Image();
+    playerLeftIdle.src = "src/assets/_side idle.png";
+
+    const playerRightIdle = new Image();
+    playerRightIdle.src = "src/assets/right_side_idle_flipped.png";
+
+    const playerUpImg = new Image();
+    playerUpImg.src = "src/assets/_up walk.png";
+
+    const playerDownImg = new Image();
+    playerDownImg.src = "src/assets/_down walk.png";
+
+    const playerLeftImg = new Image();
+    playerLeftImg.src = "src/assets/_side walk.png";
+
+    const playerRightImg = new Image();
+    playerRightImg.src = "src/assets/right_side_walk_flipped.png";
+ 
+
 
     // const background = new Sprite({
     //   position: {
@@ -51,11 +74,55 @@ const MapWithImage = () => {
         x: 400,
         y: 460,
       },
-      image: playerImg,
+      image: playerUpIdle,
       c: c,
       framesWidth: { max: 4 },
       framesHeight: { max: 2 },
       scale: 2,
+      maxFrame : 4,
+      sprites:{
+        up:{
+          image : playerUpImg ,
+          maxFrame: 5,
+        },
+
+        down:{
+          image : playerDownImg,
+          maxFrame: 5,
+        },
+
+        left:{
+          image : playerLeftImg,
+          maxFrame: 5,
+        },
+
+        right:{
+          image : playerRightImg,
+          maxFrame : 3,
+        },
+        
+        upIdle:{
+          image: playerUpIdle,
+          maxFrame : 4,
+        },
+
+        downIdle:{
+          image: playerDownIdle,
+          maxFrame : 4,
+        },
+
+        leftIdle:{
+          image: playerLeftIdle,
+          maxFrame : 4,
+        },
+
+        rightIdle:{
+          image:playerRightIdle,
+          maxFrame:3,
+        }
+
+
+      }
     });
 
     const spriteWidth = player.image.width / player.framesWidth;
@@ -109,7 +176,6 @@ const MapWithImage = () => {
       });
 
       player.draw();
-
       // player.updateFrames();
   
 
@@ -123,6 +189,10 @@ const MapWithImage = () => {
 
       let moving = true;
       if (keys.current.w.pressed) {
+
+        player.image = player.sprites.up.image;
+        player.maxFrame = player.sprites.up.maxFrame;
+
         //predicting collision
         for (let i = 0; i < boundaries.length; i++) {
           let boundary = boundaries[i];
@@ -134,16 +204,26 @@ const MapWithImage = () => {
                 y: boundary.position.y +0.6,
               },
             })
-          ) {
+          )
+          {
             moving = false;
-           
             break;
           }
         }
 
         if (moving) mapPositionRef.current.y +=0.6;
       }
+
+      // else{
+      //   player.image = player.sprites.upIdle.image;
+      //   player.maxFrame = player.sprites.upIdle.maxFrame
+      // }
+
       if (keys.current.s.pressed) {
+ 
+        player.image = player.sprites.down.image;
+        player.maxFrame = player.sprites.down.maxFrame;
+
         //predicting collision
         for (let i = 0; i < boundaries.length; i++) {
           let boundary = boundaries[i];
@@ -156,14 +236,19 @@ const MapWithImage = () => {
               },
             })
           ) {
-            moving = false;console.log("collision");
+            moving = false;
             break;
           }
         }
 
         if (moving) mapPositionRef.current.y -=0.6;
       }
+
+
       if (keys.current.d.pressed) {
+
+        player.image = player.sprites.right.image;
+        player.maxFrame = player.sprites.right.maxFrame;
         //predicting collision
         for (let i = 0; i < boundaries.length; i++) {
           let boundary = boundaries[i];
@@ -184,6 +269,9 @@ const MapWithImage = () => {
         if (moving) mapPositionRef.current.x -=0.6;
       }
       if (keys.current.a.pressed) {
+
+        player.image = player.sprites.left.image;
+        player.maxFrame = player.sprites.left.maxFrame;
         //predicting collision
         for (let i = 0; i < boundaries.length; i++) {
           let boundary = boundaries[i];
@@ -237,18 +325,26 @@ const MapWithImage = () => {
       switch (e.key) {
         case "w":
           keys.current.w.pressed = false;
+          player.image = player.sprites.upIdle.image;
+          player.maxFrame = player.sprites.upIdle.maxFrame
           break;
 
         case "s":
           keys.current.s.pressed = false;
+          player.image = player.sprites.downIdle.image;
+          player.maxFrame = player.sprites.downIdle.maxFrame;
           break;
 
         case "a":
           keys.current.a.pressed = false;
+          player.image = player.sprites.leftIdle.image;
+          player.maxFrame = player.sprites.leftIdle.maxFrame;
           break;
 
         case "d":
           keys.current.d.pressed = false;
+          player.image = player.sprites.rightIdle.image;
+          player.maxFrame = player.sprites.rightIdle.maxFrame;
           break;
 
         default:
@@ -256,7 +352,7 @@ const MapWithImage = () => {
       }
     };
 
-    image.onload = playerImg.onload = animate;
+    image.onload = playerUpIdle.onload = animate;
 
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
