@@ -4,7 +4,7 @@ import { Sprite } from "./utils";
 
 
 const CANVAS_WIDTH = 1024;
-const CANVAS_HEIGHT = 570;
+const CANVAS_HEIGHT = 670;
 
 const MapWithImage = () => {
   const canvasRef = useRef(null);
@@ -18,7 +18,7 @@ const MapWithImage = () => {
   });
 
   const offset = {
-    x: -350,
+    x: -360,
     y: -700,
   };
 
@@ -37,14 +37,14 @@ const MapWithImage = () => {
     const playerImg = new Image();
     playerImg.src = "src/assets/_up idle.png";
 
-    const background = new Sprite({
-      position: {
-        x: mapPositionRef.current.x,
-        y: mapPositionRef.current.y,
-      },
-      image: image,
-      c: c,
-    });
+    // const background = new Sprite({
+    //   position: {
+    //     x: mapPositionRef.current.x,
+    //     y: mapPositionRef.current.y,
+    //   },
+    //   image: image,
+    //   c: c,
+    // });
 
     const player = new Sprite({
       position: {
@@ -88,17 +88,18 @@ const MapWithImage = () => {
     function animate() {
       c.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-      background.position.x = mapPositionRef.current.x;
-      background.position.y = mapPositionRef.current.y;
+      // background.position.x = mapPositionRef.current.x;
+      // background.position.y = mapPositionRef.current.y;
 
-      background.draw();
+      c.drawImage(image, mapPositionRef.current.x, mapPositionRef.current.y);
+    
 
       hitbox.position.x = player.position.x + spriteWidth * player.scale * 0.4;
       hitbox.position.y =
         player.position.y + spriteHeight * player.scale * 0.26;
 
       boundaries.forEach((boundary) => {
-        c.fillStyle = "rgba(255,0,0,0.3 )";
+        c.fillStyle = "rgba(266,0,0,0.3 )";
         c.fillRect(
           boundary.position.x + mapPositionRef.current.x,
           boundary.position.y + mapPositionRef.current.y,
@@ -109,7 +110,10 @@ const MapWithImage = () => {
 
       player.draw();
 
-      c.fillStyle = "rgba(255, 0, 0, 0.3)";
+      // player.updateFrames();
+  
+
+      c.fillStyle = "rgba(266, 0, 0, 0.3)";
       c.fillRect(
         hitbox.position.x,
         hitbox.position.y,
@@ -127,17 +131,17 @@ const MapWithImage = () => {
               ...boundary,
               position: {
                 x: boundary.position.x,
-                y: boundary.position.y +1.8,
+                y: boundary.position.y +0.6,
               },
             })
           ) {
             moving = false;
-            console.log("collision");
+           
             break;
           }
         }
 
-        if (moving) mapPositionRef.current.y +=1.8;
+        if (moving) mapPositionRef.current.y +=0.6;
       }
       if (keys.current.s.pressed) {
         //predicting collision
@@ -148,17 +152,16 @@ const MapWithImage = () => {
               ...boundary,
               position: {
                 x: boundary.position.x,
-                y: boundary.position.y -1.8,
+                y: boundary.position.y -0.6,
               },
             })
           ) {
-            moving = false;
-            console.log("collision");
+            moving = false;console.log("collision");
             break;
           }
         }
 
-        if (moving) mapPositionRef.current.y -=1.8;
+        if (moving) mapPositionRef.current.y -=0.6;
       }
       if (keys.current.d.pressed) {
         //predicting collision
@@ -168,18 +171,17 @@ const MapWithImage = () => {
             collision(hitbox, {
               ...boundary,
               position: {
-                x: boundary.position.x -1.8,
+                x: boundary.position.x -0.6,
                 y: boundary.position.y,
               },
             })
           ) {
             moving = false;
-            console.log("collision");
             break;
           }
         }
 
-        if (moving) mapPositionRef.current.x -=1.8;
+        if (moving) mapPositionRef.current.x -=0.6;
       }
       if (keys.current.a.pressed) {
         //predicting collision
@@ -189,7 +191,7 @@ const MapWithImage = () => {
             collision(hitbox, {
               ...boundary,
               position: {
-                x: boundary.position.x +1.8,
+                x: boundary.position.x +0.6,
                 y: boundary.position.y,
               },
             })
@@ -199,7 +201,7 @@ const MapWithImage = () => {
           }
         }
 
-        if (moving) mapPositionRef.current.x +=1.8;
+        if (moving) mapPositionRef.current.x +=0.6;
       }
 
       requestRef.current = requestAnimationFrame(animate);
@@ -254,7 +256,7 @@ const MapWithImage = () => {
       }
     };
 
-    image.onload = animate;
+    image.onload = playerImg.onload = animate;
 
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
