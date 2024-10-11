@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import boundaries, { Boundary } from "./data/collision";
 import { Sprite } from "./utils";
+import Quest from "./Quest";
 
 
 const CANVAS_WIDTH = 1024;
@@ -23,6 +24,8 @@ const MapWithImage = () => {
   };
 
   const mapPositionRef = useRef({ x: offset.x, y: offset.y });
+
+  const [marker, setMarker] = useState(false);
 
 
   useEffect(() => {
@@ -69,9 +72,11 @@ const MapWithImage = () => {
     //   c: c,
     // });
 
+    
+
     const player = new Sprite({
       position: {
-        x: 400,
+        x: 390,
         y: 460,
       },
       image: playerUpIdle,
@@ -159,14 +164,14 @@ const MapWithImage = () => {
       // background.position.y = mapPositionRef.current.y;
 
       c.drawImage(image, mapPositionRef.current.x, mapPositionRef.current.y);
-    
+      
 
       hitbox.position.x = player.position.x + spriteWidth * player.scale * 0.4;
       hitbox.position.y =
         player.position.y + spriteHeight * player.scale * 0.26;
 
       boundaries.forEach((boundary) => {
-        c.fillStyle = "rgba(266,0,0,0.3 )";
+        c.fillStyle = "rgba(0,0,0,0 )";
         c.fillRect(
           boundary.position.x + mapPositionRef.current.x,
           boundary.position.y + mapPositionRef.current.y,
@@ -179,13 +184,27 @@ const MapWithImage = () => {
       // player.updateFrames();
   
 
-      c.fillStyle = "rgba(266, 0, 0, 0.3)";
+      c.fillStyle = "rgba(0, 0, 0, 0)";
       c.fillRect(
         hitbox.position.x,
         hitbox.position.y,
         hitbox.width,
         hitbox.height
       );
+
+      if(!marker && (mapPositionRef.current.x === -970.2000000000231 || mapPositionRef.current.x === -1002.6000000000244 || mapPositionRef.current.x === 216.60000000000088 || mapPositionRef.current.y === 204.80000000001388 )){
+        setMarker(true);
+      }
+
+      else{
+        setMarker(false);
+      }
+
+      // if(marker){
+      //   setTimeout(()=>{
+      //     setMarker(false);
+      //   }, 1000)
+      // } 
 
       let moving = true;
       if (keys.current.w.pressed) {
@@ -363,9 +382,20 @@ const MapWithImage = () => {
       window.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
+
+  // useEffect(() => {
+  //   // This will log whenever the marker value changes
+  //   console.log("Marker updated:", marker);
+  // }, [marker]);
+
   return (
     <div>
       <canvas ref={canvasRef} />
+      {marker && (
+        <div>
+          <Quest />
+        </div>
+      )}
     </div>
   );
 };
