@@ -1,0 +1,23 @@
+const quests = [
+  { name: "reverse-spell", x: 216.6, y: /* some y value */ },
+  { name: "sort-ingredients", x: -970.2, y: /* some y value */ },
+  // Add more quests as needed
+];
+
+const checkQuestProximity = (x, y) => {
+  const threshold = 5; // Distance tolerance
+  return quests.find((quest) => 
+    Math.abs(mapPositionRef.current.x - quest.x) < threshold
+    && Math.abs(mapPositionRef.current.y - quest.y) < threshold
+  );
+};
+
+useEffect(() => {
+  const nearbyQuest = checkQuestProximity(mapPositionRef.current.x, mapPositionRef.current.y);
+  if (nearbyQuest) {
+    setMarker(true);
+    setSelectedQuest(nearbyQuest.name);
+  } else {
+    setMarker(false);
+  }
+}, [mapPositionRef.current.x, mapPositionRef.current.y]);

@@ -12,6 +12,7 @@ const Player = ({ canvasRef, isImageLoaded }) => {
     playerImg.src = "src/assets/_up idle.png";
 
     playerImg.onload = () => {
+      console.log("Player rendered")
       const scale = 2;
       const width = playerImg.width * scale;
       const height = playerImg.height * scale;
@@ -28,15 +29,6 @@ const Player = ({ canvasRef, isImageLoaded }) => {
       );
     };
 
-    window.addEventListener("keydown", (e) => {
-      console.log(e.key);
-    });
-
-    return () => {
-      window.removeEventListener("keydown", (e) => {
-        console.log(e.key);
-      });
-    };
   }, [canvasRef, isImageLoaded]);
 
   return null;

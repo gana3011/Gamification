@@ -6,6 +6,7 @@ export class Sprite {
     framesWidth = { max: 1 },
     framesHeight = { max: 1 },
     scale = 1,
+    maxFrame,
     buffer = 37, 
     sprites
   }) {
@@ -21,7 +22,7 @@ export class Sprite {
     this.frame = 0;
     this.buffer = buffer;
     this.minFrame = 0;
-    this.maxFrame = 4;
+    this.maxFrame = maxFrame;
     this.bufferCounter = 0; 
     
   }

@@ -4,14 +4,14 @@ import Editor from "@monaco-editor/react";
 import { Box, HStack } from "@chakra-ui/react";
 import LanguageSelector from "./LanguageSelector";
 import { BOILERPLATE } from "../Constants";
-import Output from "./Output";
-import QuestSelector from "./QuestSelector";
 
-const CodeEditor = () => {
+import Output from "./Output";
+// import QuestSelector from "./QuestSelector";
+
+const CodeEditor = ({selectedQuest}) => {
 
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("c");
-  const [selectedQuest, setSelectedQuest] = useState("print-attack");
  
   const editorRef = useRef();
 
@@ -29,9 +29,9 @@ const CodeEditor = () => {
     setValue(BOILERPLATE[language]);
   };
 
-  const onQuest = (quest) => {
-    setSelectedQuest(quest)
-  }
+  // const onQuest = (quest) => {
+  //   setSelectedQuest(quest)
+  // }
   
   useEffect(() => {
     setValue(BOILERPLATE[selectedQuest][language])
@@ -42,7 +42,7 @@ const CodeEditor = () => {
       <HStack spacing={4}>
         <Box w="50%">
           <LanguageSelector language={language} onSelect={onSelect} />
-          <QuestSelector selectedQuest={selectedQuest} onQuest={onQuest} />
+          {/* <QuestSelector selectedQuest={selectedQuest} onQuest={onQuest} /> */}
           <Editor
             height="70vh"
             language={language}

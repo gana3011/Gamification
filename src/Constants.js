@@ -209,6 +209,21 @@ console.log(sortedIngredients);`,
   },
 };
 
+export const DESCRIPTIONS = {
+    'reverse-spell':{
+        title: "Myrdin, the wizard",
+        description:"Myrdin, the city's wise wizard, has called you to his tower for an important task. Glimmerveil is in danger, he says. To help restore balance, you must solve a problem by reversing the flow of magical energy.",
+        objective:"Create a function that reverses a string of characters, which represent the magical energy. By completing this, you'll help save Glimmerveil and earn the wizard’s favor!"
+    },
+
+    'sort-ingredients': {
+    title: "The Potion Master's Dilemma",
+    description: "The Potion Master of Glimmerveil has encountered a problem while crafting a powerful elixir to protect the city. The ingredients he needs are rare and potent, but they must be sorted correctly to ensure the potion's success. The fate of the city's defenses depends on it!",
+    objective: "Your task is to create a function that sorts the ingredients based on their potency, ensuring the potion is brewed in the proper order. The more potent the ingredient, the sooner it must be added. Help the Potion Master save Glimmerveil by sorting the ingredients correctly!"
+}
+
+}
+
 // "language": "c",
 //         "version": "10.2.0",
 //         "aliases": [

@@ -12,13 +12,23 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 
-const Quest = () => {
+import CodeEditor from './CodeEditor'
+import { DESCRIPTIONS } from '../Constants'
+
+const Quest = ({selectedQuest,isCodeEditor,setIsCodeEditor,navigate}) => {
+
 
   const { isOpen, onOpen, onClose } = useDisclosure()
  
   useEffect(()=>{
     onOpen();
   },[onOpen])
+
+  const toggleEditor = () =>{
+    setIsCodeEditor(true);
+    navigate("/editor")
+    onClose();
+  }
 
   return (
     <div>
@@ -30,19 +40,25 @@ const Quest = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>{DESCRIPTIONS[selectedQuest].title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet.</p>
+          <p>{DESCRIPTIONS[selectedQuest].description}</p><br />
+          <p><strong>Objective: </strong>{DESCRIPTIONS[selectedQuest].objective}</p>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
+            <Button colorScheme='blue' mr={3} onClick={toggleEditor} >
+              Start
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            <Button variant='ghost'  onClick={onClose}>Exit</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
+      {isCodeEditor && (
+        <div>
+          <CodeEditor selectedQuest={selectedQuest} />
+          </div>
+      )}
     </div>
   )
 }
